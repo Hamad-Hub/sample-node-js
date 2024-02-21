@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:9' }
-    }
+    agent any
     stages {
         stage('stage 1') {
             steps {
@@ -11,7 +9,7 @@ pipeline {
         stage('stage 2') {
             steps {
                 sh 'sudo npm run start:dev'
-     }
-     }
-    }
+}
+}
+}
 }
