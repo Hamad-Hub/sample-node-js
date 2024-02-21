@@ -1,12 +1,12 @@
-pipeline {
+loypipeline {
     agent any
     stages {
-        stage('stage 1') {
+        stage('Build') {
             steps {
                 sh 'sudo npm install'
             }
         }
-        stage('stage 2') {
+        stage('Deploy') {
             steps {
                 sh 'sudo npm run start:dev'
 }
