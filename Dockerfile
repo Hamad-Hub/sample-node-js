@@ -1,15 +1,13 @@
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'sudo npm install'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'sudo npm run start:dev'
-}
-}
-}
-}
+FROM node:9
+
+WORKDIR /app
+
+COPY . .
+
+
+RUN npm install
+
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start:dev"]
