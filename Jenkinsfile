@@ -1,24 +1,40 @@
 pipeline {
-agent any 
-  stages{
-   stage('Install PM2'){
-       steps{
-         sh 'sudo npm install -g pm2'
-       }
-     }
-    stage('Build'){
-      steps{
-        sh 'sudo npm install'
-      }
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+              sh 'docker build -t the-example-app.nodejs .'
+                echo 'Performing build...'
+            }
+        }
+
+
+
+        stage('Deploy') {
+            steps {
+               sh 'docker run -p 3000:3000 -d the-example-app.nodejs'
+                echo 'Deploying...'
+            }
+        }
     }
-    stage('Deploy'){
-      steps{
-        sh '''
-        echo hello world
-        sudo pm2 stop all
-        sudo pm2 start bin/www
-        '''
-      }
+
+    post {
+        success {
+            // Actions to be performed on successful execution
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            // Actions to be performed on failure
+            echo 'Pipeline failed!'
+        }
     }
-  }
 }
+
