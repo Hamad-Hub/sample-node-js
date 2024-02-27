@@ -20,7 +20,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-               sh 'sudo docker run -p 3000:3000 -d jenkins:v1'
+               sh '''
+                sudo docker stop hamad
+                sudo docker rm hamad
+                sudo docker run --name hamad -p 3000:3000 -d jenkins:v1
+                '''
                 echo 'Deploying...'
             }
         }
